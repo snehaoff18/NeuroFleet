@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": [
+        "Java_Programs",
+        "NeuroFleet/backend/src/main/java/com/neurofleetx/backend"
+    ]
+}
