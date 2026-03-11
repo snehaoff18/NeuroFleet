@@ -1,21 +1,44 @@
+import { useNavigate } from "react-router-dom";
+import "../styles/CustomerDashboard.css";
+
 function CustomerDashboard() {
+
+  const navigate = useNavigate();
+
   return (
-    <div style={styles.container}>
-      <h2>Customer Dashboard</h2>
-      <p>Welcome! Book vehicles and track rides here 🚕</p>
+    <div className="dashboard-container">
+      <div className="dashboard-card">
+
+        <h1 className="dashboard-title">
+          👤 Customer Dashboard
+        </h1>
+
+        <p className="dashboard-subtitle">
+          Welcome! You can easily book rides, manage your trips,
+          and explore smart travel options here 🚗
+        </p>
+
+        <div className="dashboard-actions">
+
+          <button
+            className="dashboard-btn book-btn"
+            onClick={() => navigate("/booking")}
+          >
+            🚗 Book a Ride
+          </button>
+
+          <button
+            className="dashboard-btn history-btn"
+            onClick={() => navigate("/booking-history")}
+          >
+            📜 View Booking History
+          </button>
+
+        </div>
+
+      </div>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f4f6f8"
-  }
-};
 
 export default CustomerDashboard;

@@ -26,34 +26,35 @@ public class AuthService {
                          String phone, String role) {
 
         if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException("Email already exists");
+            throw new IllegalArgumentException("Email already exists");
         }
 
         User user = new User();
         user.setName(name);
         user.setEmail(email);
 
-        // Hash password
+        // ✅ Hash password correctly
         user.setPassword(passwordEncoder.encode(password));
 
         user.setPhone(phone);
-        user.setRole(Role.valueOf(role));
+        user.setRole(Role.valueOf(role.toUpperCase())); // safer
 
         return userRepository.save(user);
     }
 
-    // 🔐 LOGIN (returns JWT token now)
+    // 🔐 LOGIN (returns JWT token)
     public String login(String email, String password) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() ->
+                        new IllegalArgumentException("User not found"));
 
-        // Compare hashed password
+        // ✅ Compare hashed password
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new IllegalArgumentException("Invalid credentials");
         }
 
-        // Generate JWT token
+        // ✅ Generate JWT token
         return jwtService.generateToken(
                 user.getEmail(),
                 user.getRole().name()
